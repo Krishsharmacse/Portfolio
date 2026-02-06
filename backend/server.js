@@ -7,9 +7,7 @@ dotenv.config();
 
 const app = express();
 
-// --- DEPLOYMENT FIX: Update CORS ---
-// This allows your frontend to talk to your backend even when hosted on different domains
-// server.js
+
 app.use(cors({
   // Allow 3000 (Create React App), 5173 (Vite), and 5174 (Vite fallback)
   origin: ["http://localhost:3000", "http://localhost:5173", "http://localhost:5174"],

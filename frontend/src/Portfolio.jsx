@@ -47,9 +47,12 @@ import {
   Binary,
   Fingerprint,
   Activity,
-  PieChart
+  PieChart,
+  icons
 } from 'lucide-react';
-
+import pineconeLogo from './assets/image.png'; // Make sure the path is relative to Portfolio.jsx
+import chromaLogo from './assets/Chroma.png';
+import huggingface from './assets/HuggingFace.png'
 // --- Enhanced Assets & Data Helper ---
 const getTechIcon = (techName) => {
   const normalize = (name) => name.toLowerCase().replace(/\./g, '').replace(/\s/g, '');
@@ -74,13 +77,14 @@ const getTechIcon = (techName) => {
     keras: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/keras/keras-original.svg',
     opencv: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg',
     
+    
     // GenAI & LLM Tools
     langchain: 'https://avatars.githubusercontent.com/u/126733545?s=200&v=4',
-    huggingface: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/huggingface/huggingface-original.svg',
-    pinecone: 'https://avatars.githubusercontent.com/u/59201590?s=200&v=4',
-    chromadb: 'https://avatars.githubusercontent.com/u/104716059?s=200&v=4',
+    huggingface: huggingface,
+  pinecone: pineconeLogo,
+  chromadb: chromaLogo,
     faiss: 'https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-27_at_2.18.46_PM.png',
-    openai: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/openai/openai-original.svg',
+  
     
     // Backend & Databases
     expressjs: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg',
@@ -90,7 +94,7 @@ const getTechIcon = (techName) => {
     sql: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg',
     fastapi: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg',
     flask: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg',
-    
+    ollama: 'https://ollama.com/public/ollama.png', // Added Ollama
     // DevOps & Tools
     docker: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg',
     kubernetes: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg',
@@ -130,22 +134,21 @@ try {
 }
 
 // Tech Logos Component for Hero Animation
+
 const TechLogosAnimation = () => {
   const techLogos = [
     // GenAI & LLM Tools
     { name: 'LangChain', icon: getTechIcon('langchain'), category: 'genai' },
-    { name: 'Hugging Face', icon: getTechIcon('huggingface'), category: 'genai' },
-    { name: 'PyTorch', icon: getTechIcon('pytorch'), category: 'ml' },
-    { name: 'TensorFlow'    , icon: getTechIcon('tensorflow'), category: 'ml' },
-    { name: 'OpenAI', icon: getTechIcon('openai'), category: 'genai' },
-    
+    { name: 'Ollama', icon: getTechIcon('ollama'), category: 'lang' },
+
     // Programming Languages
     { name: 'Python', icon: getTechIcon('python'), category: 'lang' },
-    { name: 'C++', icon: getTechIcon('cpp'), category: 'lang' },
-    { name: 'Node.js', icon: getTechIcon('nodejs'), category: 'backend' },
-    { name: 'Express.js', icon: getTechIcon('expressjs'), category: 'backend' },
+    { name: 'C++', icon: getTechIcon('cpp'), category: 'lang' }, 
+   
     
     // ML Frameworks
+    { name: 'PyTorch', icon: getTechIcon('pytorch'), category: 'ml' },
+    { name: 'TensorFlow', icon: getTechIcon('tensorflow'), category: 'ml' },
     { name: 'Scikit-learn', icon: getTechIcon('scikitlearn'), category: 'ml' },
     { name: 'Pandas', icon: getTechIcon('pandas'), category: 'ml' },
     { name: 'NumPy', icon: getTechIcon('numpy'), category: 'ml' },
@@ -159,6 +162,8 @@ const TechLogosAnimation = () => {
     { name: 'PostgreSQL', icon: getTechIcon('postgresql'), category: 'database' },
     
     // Backend
+    { name: 'Node.js', icon: getTechIcon('nodejs'), category: 'backend' },
+    { name: 'Express.js', icon: getTechIcon('expressjs'), category: 'backend' },
     { name: 'FastAPI', icon: getTechIcon('fastapi'), category: 'backend' },
     { name: 'Flask', icon: getTechIcon('flask'), category: 'backend' },
     
@@ -573,7 +578,7 @@ const handleContactSubmit = async (e) => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1 bg-gray-900/50 backdrop-blur-sm rounded-full p-1 border border-gray-800">
             <NavLink id="home" icon={Rocket} label="Home" />
-            <NavLink id="skills" icon={Brain} label="Skills" />
+            <NavLink id="skills" icon={Cpu} label="Skills" />
             <NavLink id="experience" icon={Briefcase} label="Experience" />
             <NavLink id="projects" icon={Code} label="Projects" />
             <NavLink id="contact" icon={Mail} label="Contact" />
@@ -805,7 +810,7 @@ const handleContactSubmit = async (e) => {
             />
             <SkillCard 
               title="Generative AI" 
-              skills={['Fine-Tuning', 'PEFT/LoRA', 'RAG', 'LLMs', 'Prompt Engineering', 'LangChain', 'Hugging Face', 'Stable Diffusion','NLP']}
+              skills={['Fine-Tuning', 'PEFT/LoRA', 'RAG', 'LLMs', 'Prompt Engineering', 'LangChain', 'Hugging Face', 'Stable Diffusion','NLP','Ollama']}
               icon={<Bot className="text-pink-400" size={28} />}
               color="pink"
               delay={200}
