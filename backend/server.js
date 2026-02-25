@@ -3,15 +3,24 @@ import nodemailer from "nodemailer";
 import cors from "cors";
 import dotenv from "dotenv";
 
+console.log("🛠 Checking System Environment...");
+
 dotenv.config();
 
 const app = express();
 
 
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  console.error("❌ ERROR: EMAIL_USER or EMAIL_PASS is missing from environment variables!");
+} else {
+  console.log("✅ Environment variables loaded for:", process.env.EMAIL_USER);
+}
+
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
+
 app.use(cors({
-  // Allow 3000 (Create React App), 5173 (Vite), and 5174 (Vite fallback)
-  origin: ["http://localhost:3000", "http://localhost:5173", "http://localhost:5174"],
-  methods: ["POST"],
+  origin: [FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"],
+  methods: ["POST", "GET", "OPTIONS"],
   credentials: true
 }));
 
@@ -25,9 +34,17 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("❌ Nodemailer Transporter Error:", error.message);
+  } else {
+    console.log("🚀 Mail server is ready to send messages");
+  }
+});
+
 app.post("/contact", async (req, res) => {
   const { name, email, message } = req.body;
-  console.log("📩 Received a request:", req.body);
+  console.log("📩 Received a request from:", email);
 
   if (!name || !email || !message) {
     return res.status(400).json({ success: false, error: "All fields are required" });
@@ -51,14 +68,15 @@ app.post("/contact", async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
+    console.log("✅ Email sent successfully to", process.env.EMAIL_USER);
     res.status(200).json({ success: true, message: "Email sent successfully" });
   } catch (error) {
-    console.error("❌ Send mail error:", error);
-    res.status(500).json({ success: false, error: "Failed to send email" });
+    console.error("❌ Send mail error detail:", error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🟢 Backend Server running on port ${PORT}`);
 });

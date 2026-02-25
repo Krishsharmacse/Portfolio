@@ -18,7 +18,7 @@ const Contact = () => {
 
     try {
       // 1. Ensure backend is running at http://localhost:5000
-      const res = await fetch("http://localhost:5000/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const Contact = () => {
             Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Build Together</span>
           </h2>
         </div>
-        
+
         <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-gray-800 shadow-2xl">
           <form onSubmit={handleContactSubmit} className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -66,10 +66,10 @@ const Contact = () => {
                   <div className="w-2 h-2 rounded-full bg-blue-500" />
                   Your Name
                 </label>
-                <input 
+                <input
                   name="name" // Crucial for FormData
-                  required 
-                  type="text" 
+                  required
+                  type="text"
                   className="w-full bg-gray-950/50 border border-gray-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
                   placeholder="Krish Sharma"
                 />
@@ -81,10 +81,10 @@ const Contact = () => {
                   <div className="w-2 h-2 rounded-full bg-purple-500" />
                   Email Address
                 </label>
-                <input 
+                <input
                   name="email" // Crucial for FormData
-                  required 
-                  type="email" 
+                  required
+                  type="email"
                   className="w-full bg-gray-950/50 border border-gray-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                   placeholder="krish@example.com"
                 />
@@ -97,18 +97,18 @@ const Contact = () => {
                 <div className="w-2 h-2 rounded-full bg-green-500" />
                 Your Message
               </label>
-              <textarea 
+              <textarea
                 name="message" // Crucial for FormData
-                required 
-                rows="5" 
+                required
+                rows="5"
                 className="w-full bg-gray-950/50 border border-gray-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all resize-none"
                 placeholder="I'd like to discuss a project..."
               />
             </div>
 
             {/* Submit Button */}
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={formStatus === 'sending' || formStatus === 'sent'}
               className="group relative w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 text-white font-bold py-5 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
             >
