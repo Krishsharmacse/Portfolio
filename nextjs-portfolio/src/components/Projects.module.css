@@ -41,7 +41,7 @@
 .featured { grid-column: span 2; }
 
 
-/* Screenshot image area */
+/* Screenshot image area — 16:9 for widescreen shots */
 .imgWrap {
   position: relative;
   width: 100%;
@@ -51,11 +51,23 @@
   background: var(--surface-2);
   flex-shrink: 0;
 }
+
+/* Square (1:1) screenshots — show at 4:3 so they look similar height to 16:9 */
+.imgWrapSquare {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  flex-shrink: 0;
+}
+
 .img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top;
+  object-position: center top;
   display: block;
   transition: transform 0.4s ease;
 }

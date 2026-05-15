@@ -40,7 +40,7 @@ export default function Projects() {
               >
                 {/* Screenshot preview */}
                 {project.image && (
-                  <div className={styles.imgWrap}>
+                  <div className={project.imgStyle === 'square' ? styles.imgWrapSquare : styles.imgWrap}>
                     <img
                       src={project.image}
                       alt={`${project.title} screenshot`}

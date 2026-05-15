@@ -99,7 +99,7 @@ export const PROJECTS = [
     link: 'https://printx.qskip.in/',
     featured: true,
     color: 'violet',
-    image: '/projects/printx.png',
+    image: '/projects/printx-new.png',
   },
   {
     title: 'JalShakti — Rainwater Harvesting AI',
@@ -108,7 +108,7 @@ export const PROJECTS = [
     link: 'https://rtrwh-mu.vercel.app',
     featured: true,
     color: 'green',
-    image: '/projects/jalshakti.png',
+    image: '/projects/jalshakti-new.png',
   },
   {
     title: 'Deepfake Detection System',
@@ -117,6 +117,7 @@ export const PROJECTS = [
     link: 'https://github.com/Krishsharmacse/DeepFake-Detection-System',
     color: 'purple',
     image: '/projects/deepfake.png',
+    imgStyle: 'square',
   },
   {
     title: 'AI Resume Analyzer',
@@ -125,6 +126,7 @@ export const PROJECTS = [
     link: 'https://github.com/Krishsharmacse/AI-COACH',
     color: 'blue',
     image: '/projects/resume.png',
+    imgStyle: 'square',
   },
   {
     title: 'Brain Tumour Detection',
@@ -133,6 +135,7 @@ export const PROJECTS = [
     link: 'https://github.com/Krishsharmacse/Brain-Tumour-Detector',
     color: 'red',
     image: '/projects/brain-tumour.png',
+    imgStyle: 'square',
   },
   {
     title: 'Healthcare Chatbot',
