@@ -12,7 +12,7 @@
   margin-bottom: 56px;
 }
 
-/* ─── Grid: always 2-col on desktop ─── */
+/* ─── Grid: uniform 2-col — all cards identical size ─── */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -29,7 +29,6 @@
   flex-direction: column;
   transition: box-shadow 0.25s, transform 0.25s;
   position: relative;
-  /* Force equal height within each row */
   height: 100%;
 }
 .card:hover {
@@ -37,8 +36,12 @@
   box-shadow: 0 16px 40px rgba(0,0,0,0.3);
 }
 
-/* Featured spans both columns */
-.featured { grid-column: span 2; }
+/* featured is no longer used for span — kept for badge styling only */
+.featured { grid-column: span 1; }
+
+/* If a card has no image (e.g. Fake News), let it span full width so it
+   doesn't sit alone in a half-empty row */
+.noImage { grid-column: span 2; }
 
 
 /* Screenshot image area — 16:9 for widescreen shots */
@@ -179,7 +182,8 @@
   .container { padding: 0 24px; }
   .header { margin-bottom: 40px; }
   .grid { grid-template-columns: 1fr 1fr; }
-  .featured { grid-column: span 2; }
+  /* noImage (no screenshot) stays full width on tablet too */
+  .noImage { grid-column: span 2; }
 }
 
 /* ─── Mobile ─── */
@@ -190,6 +194,8 @@
     grid-template-columns: 1fr;
     gap: 14px;
   }
+  /* Everything single column on mobile */
+  .noImage { grid-column: span 1; }
   .header { margin-bottom: 32px; }
   .body { padding: 16px; }
   .description { -webkit-line-clamp: 2; }

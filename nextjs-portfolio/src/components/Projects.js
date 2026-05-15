@@ -35,7 +35,11 @@ export default function Projects() {
             return (
               <article
                 key={i}
-                className={`${styles.card} ${project.featured ? styles.featured : ''} animate-on-scroll`}
+                className={[
+                  styles.card,
+                  !project.image ? styles.noImage : '',
+                  'animate-on-scroll',
+                ].join(' ')}
                 style={{ transitionDelay:`${i * 55}ms`, borderColor: c.border }}
               >
                 {/* Screenshot preview */}
