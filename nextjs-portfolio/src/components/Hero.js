@@ -2,7 +2,6 @@
 import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 import { STATS } from '@/lib/data';
-import HeroEffect from './HeroEffect';
 import TechOrbit from './TechOrbit';
 import styles from './Hero.module.css';
 
@@ -11,8 +10,7 @@ const TAGS = ['Generative AI', 'LLMs', 'Computer Vision', 'MLOps', 'Data Science
 export default function Hero({ scrollTo }) {
   return (
     <section id="home" className={styles.section} aria-label="Introduction">
-      {/* Canvas mouse animation */}
-      <HeroEffect />
+      {/* Canvas cursor effect is now global (layout.js) */}
       <div className={styles.container}>
 
         {/* ── Left column ── */}

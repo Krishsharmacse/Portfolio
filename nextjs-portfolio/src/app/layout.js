@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
-import CustomCursor from '@/components/CustomCursor';
+import GlobalCursorEffect from '@/components/GlobalCursorEffect';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -85,7 +85,7 @@ export default function RootLayout({ children }) {
         <link rel="canonical" href="https://krishsharma.dev" />
       </head>
       <body>
-        <CustomCursor />
+        <GlobalCursorEffect />
         {children}
       </body>
     </html>
