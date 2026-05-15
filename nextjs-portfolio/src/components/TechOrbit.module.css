@@ -4,9 +4,11 @@
 .wrapper {
   position: relative;
   width: 100%;
-  height: 420px;
-  border-radius: 24px;
-  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  max-height: 420px;
+  border-radius: 50%;
+  /* overflow visible so chips/tooltips can bleed out */
+  overflow: visible;
   background: linear-gradient(135deg, rgba(15,15,26,0.6) 0%, rgba(6,6,16,0.5) 100%);
   border: 1px solid rgba(255,255,255,0.07);
   display: flex;
@@ -86,8 +88,8 @@
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15,15,26,0.95);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(15,15,26,0.97);
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 8px;
   padding: 4px 10px;
   font-size: 11px;
@@ -97,7 +99,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;
-  z-index: 10;
+  z-index: 50;
 }
 .techChip:hover .techTooltip { opacity: 1; }
 
@@ -143,12 +145,13 @@
   transform: translate(-50%, -50%);
   width: 64px; height: 64px;
   background: linear-gradient(135deg, var(--violet) 0%, #4f46e5 100%);
-  border-radius: 18px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 32px rgba(124,58,237,0.5), 0 8px 24px rgba(0,0,0,0.4);
-  animation: orbitSpin 20s linear infinite;
+  /* NO spin — stays perfectly stable */
+  animation: none;
   z-index: 2;
 }
 .brainIcon {
@@ -224,12 +227,12 @@
 
 /* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
-  .wrapper { height: 380px; border-radius: 20px; }
+  .wrapper { max-height: 380px; }
 }
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
-  .wrapper { height: 320px; border-radius: 18px; }
+  .wrapper { max-height: 320px; }
 
   /* Shrink spin ring + radius proportionally */
   .spinRing {
@@ -260,7 +263,7 @@
 
 /* ── Small mobile (≤480px) ── */
 @media (max-width: 480px) {
-  .wrapper { height: 280px; }
+  .wrapper { max-height: 280px; }
 
   .spinRing { width: 228px; height: 228px; }
 

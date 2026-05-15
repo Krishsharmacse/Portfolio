@@ -12,11 +12,12 @@
   margin-bottom: 56px;
 }
 
-/* ─── Grid: 2-col on desktop, 1-col on mobile ─── */
+/* ─── Grid: always 2-col on desktop ─── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
+  align-items: stretch;
 }
 
 .card {
@@ -28,14 +29,17 @@
   flex-direction: column;
   transition: box-shadow 0.25s, transform 0.25s;
   position: relative;
+  /* Force equal height within each row */
+  height: 100%;
 }
 .card:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 40px rgba(0,0,0,0.3);
 }
 
-.featured { grid-column: span 1; }
-@media (min-width: 960px) { .featured { grid-column: span 2; } }
+/* Featured spans both columns */
+.featured { grid-column: span 2; }
+
 
 /* Screenshot image area */
 .imgWrap {
@@ -162,8 +166,8 @@
   .section { padding: 80px 0; }
   .container { padding: 0 24px; }
   .header { margin-bottom: 40px; }
-  /* Ensure featured cards don't span 2 cols on tablet */
-  .featured { grid-column: span 1 !important; }
+  .grid { grid-template-columns: 1fr 1fr; }
+  .featured { grid-column: span 2; }
 }
 
 /* ─── Mobile ─── */

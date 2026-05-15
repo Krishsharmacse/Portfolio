@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { Brain, Sparkles, Database, Terminal } from 'lucide-react';
-import { Cpu as CpuIcon } from 'lucide-react';
+import { Cpu, Sparkles, Database, Terminal } from 'lucide-react';
 import styles from './TechOrbit.module.css';
 
 const getTechIcon = (techName) => {
@@ -125,10 +124,10 @@ export default function TechOrbit() {
       <div className={`${styles.ring} ${styles.ring2}`} aria-hidden="true" />
       <div className={`${styles.ring} ${styles.ring3}`} aria-hidden="true" />
 
-      {/* ── Central Brain ── */}
+      {/* ── Central Stable Icon ── */}
       <div className={styles.centerGlow} aria-hidden="true" />
       <div className={styles.center}>
-        <Brain className={styles.brainIcon} />
+        <Cpu className={styles.brainIcon} />
       </div>
 
       {/* ── Floating Particles ── */}
@@ -154,7 +153,7 @@ export default function TechOrbit() {
         GenAI Tools
       </div>
       <div className={`${styles.label} ${styles.labelTR}`}>
-        <CpuIcon size={10} />
+        <Cpu size={10} />
         ML Frameworks
       </div>
       <div className={`${styles.label} ${styles.labelBL}`}>
