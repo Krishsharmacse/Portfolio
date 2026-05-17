@@ -68,6 +68,7 @@ function getRadius(wrapperWidth) {
 export default function TechOrbit() {
   const wrapperRef = useRef(null);
   const [radius, setRadius] = useState(188);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const el = wrapperRef.current;
@@ -75,6 +76,7 @@ export default function TechOrbit() {
 
     const update = () => setRadius(getRadius(el.offsetWidth));
     update(); // set immediately on mount
+    setMounted(true);
 
     const ro = new ResizeObserver(update);
     ro.observe(el);
@@ -89,18 +91,24 @@ export default function TechOrbit() {
       {/* ── Orbital ring + logos ── */}
       <div
         className={styles.spinRing}
-        style={{ width: radius * 2, height: radius * 2 }}
+        style={mounted ? { width: radius * 2, height: radius * 2 } : { width: 376, height: 376 }}
       >
         {TECH_LOGOS.map((tech, index) => {
-          const angle = (index * 360) / TECH_LOGOS.length;
-          const x = radius * Math.cos((angle * Math.PI) / 180);
-          const y = radius * Math.sin((angle * Math.PI) / 180);
+          // Before mount: render with no transform so SSR and first client paint match
+          const style = mounted
+            ? (() => {
+                const angle = (index * 360) / TECH_LOGOS.length;
+                const x = radius * Math.cos((angle * Math.PI) / 180);
+                const y = radius * Math.sin((angle * Math.PI) / 180);
+                return { transform: `translate(${x}px, ${y}px) translate(-50%, -50%)` };
+              })()
+            : { transform: 'translate(-50%, -50%)', opacity: 0 };
 
           return (
             <div
               key={index}
               className={styles.techAnchor}
-              style={{ transform: `translate(${x}px, ${y}px) translate(-50%, -50%)` }}
+              style={style}
             >
               {/* Counter-rotate so icons stay upright */}
               <div className={styles.techCounterSpin}>

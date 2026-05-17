@@ -5,10 +5,11 @@ import Hero       from './Hero';
 import Skills     from './Skills';
 import Experience from './Experience';
 import Projects   from './Projects';
+import Resume     from './Resume';
 import Contact    from './Contact';
 import Footer     from './Footer';
 
-const SECTIONS = ['home', 'skills', 'experience', 'projects', 'contact'];
+const SECTIONS = ['home', 'skills', 'experience', 'projects', 'resume', 'contact'];
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState('home');
@@ -53,6 +54,7 @@ export default function Portfolio() {
         <Skills />
         <Experience />
         <Projects />
+        <Resume />
         <Contact />
       </main>
       <Footer />

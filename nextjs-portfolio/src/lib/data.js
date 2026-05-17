@@ -5,6 +5,7 @@ export const NAV_LINKS = [
   { id: 'skills',     label: 'Skills' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects',   label: 'Projects' },
+  { id: 'resume',     label: 'Resume' },
   { id: 'contact',    label: 'Contact' },
 ];
 
@@ -138,15 +139,17 @@ export const PROJECTS = [
   {
     title: 'Healthcare Chatbot',
     description: 'Medical assistant using RAG architecture with Pinecone vector DB and Google Gemini for accurate, context-aware healthcare insights.',
-    tags: ['RAG','Pinecone','Gemini API','NLP'],
-    link: 'https://github.com/Krishsharmacse/Healthcare-Chatbot',
+    tags: ['RAG','Pinecone','Gemini API','NLP','LangChain','LLMs'],
+    link: 'https://healthcare-chatbot-7-yh6w.onrender.com/',
+    image: '/projects/Healthbot.png',
+    imgStyle: 'square',
     color: 'teal',
   },
   {
-    title: 'Fake News Detection',
+    title: 'Verification Syndicate',
     description: 'Multi-agent LangGraph pipeline using NLP and ensemble classifiers to verify news claims across text, audio, and video modalities with real-time analysis.',
-    tags: ['LangGraph','NLP','Agents','Multi-modal'],
-    link: null,
+    tags: ['LangGraph','Agents','Multi-modal'],
+    link: "https://github.com/Krishsharmacse/VERIFICATION-SYNDICATE",
     color: 'orange',
     image: '/projects/fakenews.png',
   },

@@ -1,20 +1,73 @@
 import { NextResponse } from 'next/server';
 
-// ─── In-memory rate limiter (resets on serverless cold-start) ────────────────
-const RATE_MAP = new Map();          // ip → { count, resetAt }
-const RATE_LIMIT   = 5;             // max requests per window
-const RATE_WINDOW  = 15 * 60 * 1000; // 15 minutes in ms
+// ─── In-memory rate limiter — keyed by IP + device fingerprint ───────────────
+const RATE_MAP    = new Map();         // key → { count, resetAt }
+const RATE_LIMIT  = 5;                 // max requests per window per key
+const RATE_WINDOW = 15 * 60 * 1000;   // 15 minutes in ms
 
-function checkRateLimit(ip) {
-  const now  = Date.now();
-  const entry = RATE_MAP.get(ip);
+/**
+ * Lightweight, non-cryptographic hash (FNV-1a 32-bit).
+ * Good enough to distinguish browser fingerprints without the overhead of
+ * Node's `crypto` module on every request.
+ */
+function fnv1a(str) {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    hash ^= str.charCodeAt(i);
+    hash = (hash * 0x01000193) >>> 0; // keep 32-bit unsigned
+  }
+  return hash.toString(16);
+}
+
+/**
+ * Build a composite rate-limit key from:
+ *   1. Client IP address
+ *   2. A "device fingerprint" — FNV-1a hash of User-Agent + Accept headers
+ *
+ * Benefits:
+ *  - Multiple devices behind the same NAT/IP don't share a quota.
+ *  - A single device that rotates IPs (VPN, mobile network) is still limited.
+ *  - We enforce limits on BOTH dimensions independently (see below).
+ */
+function getRateLimitKeys(req) {
+  const forwarded = req.headers.get('x-forwarded-for');
+  const ip        = forwarded ? forwarded.split(',')[0].trim() : 'unknown';
+
+  const ua        = req.headers.get('user-agent')    || '';
+  const accept    = req.headers.get('accept')        || '';
+  const lang      = req.headers.get('accept-language') || '';
+  const fingerprint = fnv1a(`${ua}|${accept}|${lang}`);
+
+  return {
+    ipKey:          ip,                          // limit per IP
+    deviceKey:      `fp::${fingerprint}`,        // limit per device (across IPs)
+    compositeKey:   `${ip}::${fingerprint}`,     // limit per IP+device pair
+  };
+}
+
+function checkRateLimit(key) {
+  const now   = Date.now();
+  const entry = RATE_MAP.get(key);
   if (!entry || now > entry.resetAt) {
-    RATE_MAP.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
-    return true;                     // allowed
+    RATE_MAP.set(key, { count: 1, resetAt: now + RATE_WINDOW });
+    return true;                      // allowed
   }
   if (entry.count >= RATE_LIMIT) return false; // blocked
   entry.count++;
   return true;
+}
+
+/**
+ * Enforce rate limits on all three dimensions.
+ * A request is allowed only if ALL three checks pass.
+ */
+function isRateLimited(req) {
+  const { ipKey, deviceKey, compositeKey } = getRateLimitKeys(req);
+  // Check all keys — side-effectfully increments whichever ones are still under limit
+  const ipOk        = checkRateLimit(ipKey);
+  const deviceOk    = checkRateLimit(deviceKey);
+  const compositeOk = checkRateLimit(compositeKey);
+  return !(ipOk && deviceOk && compositeOk);
 }
 
 // ─── Input sanitisation — strip HTML/script tags ─────────────────────────────
@@ -128,10 +181,8 @@ export async function POST(req) {
       'X-Frame-Options':        'DENY',
     };
 
-    // ── Rate limit by IP ──
-    const forwarded = req.headers.get('x-forwarded-for');
-    const ip = forwarded ? forwarded.split(',')[0].trim() : 'unknown';
-    if (!checkRateLimit(ip)) {
+    // ── Rate limit by IP + device fingerprint ──
+    if (isRateLimited(req)) {
       return NextResponse.json(
         { success: false, error: 'Too many requests. Please wait 15 minutes.' },
         { status: 429, headers }
