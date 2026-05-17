@@ -1,22 +1,19 @@
 'use client';
-import { useState } from 'react';
-import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Eye } from 'lucide-react';
+import { FileText, Download, ExternalLink } from 'lucide-react';
 import styles from './Resume.module.css';
 
 const RESUME_PATH = '/projects/Krish_Sharma_Resume.pdf';
 
 const HIGHLIGHTS = [
-  { label: 'B.Tech CSE (AI/ML)',        value: 'ABES Engineering College · 2022–2026' },
-  { label: 'AI Intern',                 value: 'Prodigal AI · Jan–Apr 2026' },
-  { label: 'AI Research Intern',        value: 'Coding Jr · Jun–Sep 2025' },
-  { label: 'Top Skills',                value: 'LangChain · PyTorch · TensorFlow · FastAPI' },
-  { label: 'Projects Shipped',          value: '10+ end-to-end AI / full-stack products' },
-  { label: 'Certifications',            value: 'Google ML Crash Course · DeepLearning.AI' },
+  { label: 'B.Tech CSE',          value: 'University School of Information, Communication and Technology · 2024–2027' },
+  { label: 'AI Intern',           value: 'Prodigal AI · Jan–Apr 2026' },
+  { label: 'AI Research Intern',  value: 'Coding Jr · Jun–Sep 2025' },
+  { label: 'Top Skills',          value: 'LangChain · PyTorch · TensorFlow · FastAPI' },
+  { label: 'Projects Shipped',    value: '10+ end-to-end AI / full-stack products' },
+  { label: 'Certifications',      value: 'Certified Generative AI Professional (Oracle), Data Science Essentials with Python (Cisco)' },
 ];
 
 export default function Resume() {
-  const [previewOpen, setPreviewOpen] = useState(false);
-
   return (
     <section id="resume" className={styles.section} aria-label="Resume">
       <div className={styles.container}>
@@ -35,7 +32,7 @@ export default function Resume() {
         {/* ── Main card ── */}
         <div className={`${styles.card} animate-on-scroll`}>
 
-          {/* Left: decorative PDF thumbnail placeholder */}
+          {/* Left: decorative PDF thumbnail */}
           <div className={styles.thumbWrap} aria-hidden="true">
             <div className={styles.thumb}>
               <div className={styles.thumbLines}>
@@ -86,42 +83,9 @@ export default function Resume() {
                 <ExternalLink size={15} />
                 Open in Tab
               </a>
-
-              <button
-                className={styles.btnPreview}
-                onClick={() => setPreviewOpen(v => !v)}
-                id="resume-preview-toggle"
-                aria-expanded={previewOpen}
-              >
-                <Eye size={15} />
-                {previewOpen ? 'Hide Preview' : 'Preview'}
-                {previewOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-              </button>
             </div>
           </div>
         </div>
-
-        {/* ── Inline PDF preview (lazy) ── */}
-        {previewOpen && (
-          <div className={`${styles.previewWrap} animate-on-scroll`}>
-            <div className={styles.previewBar}>
-              <span className={styles.previewLabel}><Eye size={13} /> Resume Preview</span>
-              <a
-                href={RESUME_PATH}
-                download="Krish_Sharma_Resume.pdf"
-                className={styles.previewDownload}
-              >
-                <Download size={13} /> Download
-              </a>
-            </div>
-            <iframe
-              src={`${RESUME_PATH}#view=FitH`}
-              title="Krish Sharma Resume"
-              className={styles.iframe}
-              loading="lazy"
-            />
-          </div>
-        )}
 
       </div>
     </section>
